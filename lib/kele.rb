@@ -9,16 +9,14 @@ class Kele
     @bloc_api_url = 'https://www.bloc.io/api/v1'
     
     # set up a POST request to 'https://www.bloc.io/api/v1/sessions' for a @user_auth_token
-    values = {
+    body = {
       email: @email,
       password: @password
     }
-    
     headers = {
       :content_type => 'application/json'
     }
-    
-    options = { body: values.to_json, headers: headers }
+    options = { headers: headers, body: body.to_json }
     
     # the POST request
     path = @bloc_api_url + '/sessions'
@@ -39,13 +37,34 @@ class Kele
       :content_type => 'application/json',
       :authorization => @user_auth_token
     }
+    options = { headers: headers }
     
     # the GET request
     path = @bloc_api_url + '/users/me'
-    options = { headers: headers }
     http_party_response = self.class.get path, options
     
     # parse the JSON response to a Ruby hash and return it
     JSON.parse(http_party_response.body)
   end
+  
+  # get_mentor_availability(...)
+  # => retrieves an array of the mentor's available time slots for the given mentor_id
+  def get_mentor_availability(mentor_id)
+    # set up a GET request to 'https://www.bloc.io/api/v1/mentors/mentor_id/student_availability'
+    headers = {
+      :content_type => 'application/json',
+      :authorization => @user_auth_token
+    }
+    options = { headers: headers, id: mentor_id }
+    
+    # the GET request
+    path = @bloc_api_url + '/mentors/' + mentor_id.to_s + '/student_availability'
+    http_party_response = self.class.get path, options
+    
+    # parse the JSON response to a Ruby hash and convert it to useful array
+    parsed_hash = JSON.parse(http_party_response.body)
+    parsed_hash.reject! {|i| i["booked"] } # remove booked time slots
+    parsed_hash.map {|i| [i["week_day"], i["starts_at"], i["ends_at"]] } # convert to array + return
+  end
+  
 end
