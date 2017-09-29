@@ -1,8 +1,11 @@
 require 'httparty'
+require 'roadmap/roadmapscheckpoints'
 
 class Kele
   include HTTParty
+  include RoadmapsCheckpoints
   
+  # initialize
   def initialize(email, password)
     @email = email
     @password = password
@@ -34,8 +37,8 @@ class Kele
   def get_me
     # set up a GET request to 'https://www.bloc.io/api/v1/users/me' for current user data
     headers = {
-      :content_type => 'application/json',
-      :authorization => @user_auth_token
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
     }
     options = { headers: headers }
     
@@ -52,13 +55,13 @@ class Kele
   def get_mentor_availability(mentor_id)
     # set up a GET request to 'https://www.bloc.io/api/v1/mentors/mentor_id/student_availability'
     headers = {
-      :content_type => 'application/json',
-      :authorization => @user_auth_token
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
     }
     options = { headers: headers, id: mentor_id }
     
     # the GET request
-    path = @bloc_api_url + '/mentors/' + mentor_id.to_s + '/student_availability'
+    path = @bloc_api_url + "/mentors/#{mentor_id}/student_availability"
     http_party_response = self.class.get path, options
     
     # parse the JSON response to a Ruby hash and convert it to useful array
