@@ -66,8 +66,8 @@ class Kele
     
     # parse the JSON response to a Ruby hash and convert it to useful array
     parsed_hash = JSON.parse(http_party_response.body)
-    parsed_hash.reject! {|i| i["booked"] } # remove booked time slots
-    parsed_hash.map {|i| [i["week_day"], i["starts_at"], i["ends_at"]] } # convert to array + return
+    # parsed_hash.reject! {|i| i["booked"] } # remove booked time slots
+    parsed_hash.map {|i| i } # convert to array + return
   end
   
 end
