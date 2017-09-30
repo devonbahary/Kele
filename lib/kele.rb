@@ -70,4 +70,46 @@ class Kele
     parsed_hash.map {|i| i } # convert to array + return
   end
   
+  # get_messages(...*)
+  # => retrieves the first page of message threads for the current user or a specified page
+  def get_messages(page = 1) 
+    # set up a GET request to 'https://www.bloc.io/api/v1/message_threads'
+    headers = {
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
+    }
+    options = { headers: headers, page: page}
+  
+    # the GET request
+    path = @bloc_api_url + "/message_threads"
+    http_party_response = self.class.get path, options
+    
+    # parse the JSON responses to native Ruby objects, return messages in the context of pages
+    # =>  "Either return the first page of messages or a specified page"
+    message_list = JSON.parse(http_party_response.body)["items"]
+  end
+
+  # create_message(...)
+  # => creates a new message on an existing message thread, or creates a new message thread with new
+  # => message if conversation thread argument is omitted
+  def create_message(sender_email, recipient_id, subject, message, thread_token = nil)
+    # set up a POST request to 'https://www.bloc.io/api/v1/messages'
+    headers = {
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
+    }
+    body = {
+      sender: sender_email,
+      recipient_id: recipient_id,
+      token: thread_token,
+      subject: subject,
+      "stripped-text": message
+    }
+    options = { headers: headers, body: body.to_json }
+    
+    # the POST request
+    path = @bloc_api_url + '/messages'
+    http_party_response = self.class.post path, options
+  end
+
 end
