@@ -16,3 +16,13 @@
 
 `mentor_id = user_object["current_enrollment"]["mentor_id"]`   
 `kele_client.get_mentor_availability(mentor_id) # => Array`
+
+**Retrieve a roadmap object containing its associated sections and checkpoints with `#get_roadmap(roadmap_id)`**
+
+`roadmap_id = 31 # Rails roadmap`   
+`kele_client.get_roadmap(roadmap_id) # => Hash`
+
+**Retrieve a checkpoint object containing its associated body and assignment with `#get_checkpoint(checkpoint_id)`**
+
+`checkpoint_id = 1938`   
+`kele_client.get_checkpoint(checkpoint_id) # => Hash`
