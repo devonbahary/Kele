@@ -26,3 +26,23 @@
 
 `checkpoint_id = 1938`   
 `kele_client.get_checkpoint(checkpoint_id) # => Hash`
+
+
+**Retrieve the first page of message threads or a specified page with `#get_messages(page_num)`**
+
+`page_num = 2`   
+`kele_client.get_messages(page_num) # => hash containing message threads from page 2`   
+`kele_client.get_messages           # => hash containing message threads from page 1 (default)`
+
+
+**Send a message to another Bloc user with `#create_message(your_email, recipient_bloc_id, subject, message, message_thread*)`**
+
+`email = 'devonbahary@bloc.io`   
+`recipient_id = 1437294`   
+`subject = 'Hey Mark!'`   
+`message_thread = '7991495e-8d73-430c-99b8-46bc7f7df7e3'`
+
+`kele_client.create_message(email, recipient_id, subject, 'How's it going?')`   
+`# => creates a new conversation thread`   
+`kele_client.create_message(email, recipient_id, subject, 'This is my reply to an existing thread!', message_thread)`   
+`# => a reply to an existing thread`
