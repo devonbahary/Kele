@@ -78,7 +78,7 @@ class Kele
       :content_type   => 'application/json',
       :authorization  => @user_auth_token
     }
-    options = { headers: headers, page: page}
+    options = { headers: headers, query: { page: page } }
   
     # the GET request
     path = @bloc_api_url + "/message_threads"
