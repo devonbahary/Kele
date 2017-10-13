@@ -112,4 +112,30 @@ class Kele
     http_party_response = self.class.post path, options
   end
 
+  # create_submission(...)
+  # => creates a new Bloc checkpoint submission
+  def create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)
+    # set up a POST request to 'https://www.bloc.io/api/v1/checkpoint_submissions'
+    headers = {
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
+    }
+    
+    enrollment_id = get_me["current_enrollment"]["id"]
+    
+    body = {
+      "assignment_branch": assignment_branch,
+      "assignment_commit_link": assignment_commit_link,
+      "checkpoint_id": checkpoint_id,
+      comment: comment,
+      enrollment_id: enrollment_id
+    }
+    
+    options = { headers: headers, body: body.to_json }
+    
+    # the POST request
+    path = @bloc_api_url + '/checkpoint_submissions'
+    http_party_response = self.class.post path, options
+  end
+
 end

@@ -46,3 +46,12 @@
 `# => creates a new conversation thread`   
 `kele_client.create_message(email, recipient_id, subject, 'This is my reply to an existing thread!', message_thread)`   
 `# => a reply to an existing thread`
+
+** Create a checkpoint submission with `#create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)`**
+
+`checkpoint_id = 1601`   
+`assignment_branch = '11-static-pages'`   
+`assignment_commit_link = 'https://https://github.com/devonbahary/bloccit/tree/11-static-pages'`   
+`comment = 'i submit now dis'`
+
+`kele_client.create_submission(checkpoint_id, assignment_branch, assignment_commit_link, comment)`
