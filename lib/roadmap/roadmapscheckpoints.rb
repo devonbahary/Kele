@@ -5,7 +5,8 @@ module RoadmapsCheckpoints
   def get_roadmap(roadmap_id)
     # set up a GET request to 'https://www.bloc.io/api/v1/roadmaps/roadmap_id'
     headers = {
-      :content_type   => 'application/json'
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
     } 
     options = { headers: headers, id: roadmap_id }
     
@@ -22,7 +23,8 @@ module RoadmapsCheckpoints
   def get_checkpoint(checkpoint_id)
     # set up a GET request to 'https://www.bloc.io/api/v1/checkpoints/checkpoint_id'
     headers = {
-      :content_type   => 'application/json'
+      :content_type   => 'application/json',
+      :authorization  => @user_auth_token
     }
     options = { headers: headers, id: checkpoint_id }
     
